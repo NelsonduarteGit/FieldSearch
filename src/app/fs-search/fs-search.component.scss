@@ -1,6 +1,10 @@
 .accordion {
-  h2 {
-    text-align: right;
+  .mat-panel-title {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  h3 {
     color: #f44336;
   }
 }
@@ -13,7 +17,6 @@ form {
   border-radius: 5px;
 
   padding: 20px;
-  width: 80vw;
   margin: 0 auto;
 
   mat-form-field {

@@ -7,6 +7,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-fs-search',
@@ -36,7 +37,10 @@ export class FsSearchComponent implements OnInit {
   pageIndex = 0;
   currentPage: number = 1;
 
+  panelOpenState = false;
+
   @ViewChild('paginatorRef', { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
 
   constructor(
     private formBuilder: FormBuilder,
