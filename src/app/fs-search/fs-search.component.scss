@@ -1,0 +1,114 @@
+.accordion {
+  h2 {
+    text-align: right;
+    color: #f44336;
+  }
+}
+
+form {
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  border-radius: 5px;
+
+  padding: 20px;
+  width: 80vw;
+  margin: 0 auto;
+
+  mat-form-field {
+    width: 100%;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  mat-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .radios {
+      display: flex;
+
+      margin-left: -10px;
+
+      mat-radio-button {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .button-row {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+    button {
+      margin-left: 10px;
+      width: 180px;
+      border-radius: 20px;
+    }
+  }
+}
+
+mat-table {
+  padding: 10px 20px;
+
+  background-color: transparent;
+
+  width: 80vw;
+  margin: 0 auto;
+
+  mat-header-row {
+    border: none;
+  }
+
+  mat-header-cell {
+    border: none;
+  }
+
+  mat-cell {
+    background-color: white;
+    width: max-content;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:first-child {
+      border-radius: 5px 0px 0px 5px;
+    }
+    &:last-child {
+      border-radius: 0px 5px 5px 0px;
+    }
+  }
+  mat-row {
+    margin-bottom: 5px;
+    min-height: 40px;
+  }
+}
+
+.NoData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 30px;
+
+  img {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 20px;
+  }
+
+  h2 {
+    margin-bottom: -5px;
+  }
+}
+
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

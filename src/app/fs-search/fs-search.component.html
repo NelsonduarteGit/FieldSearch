@@ -1,0 +1,170 @@
+<cdk-accordion class="accordion">
+  <cdk-accordion-item
+    #accordionItem="cdkAccordionItem"
+    class="example-accordion-item"
+    role="button"
+    expanded="true"
+    tabindex="0"
+    [attr.id]="'accordion-header-'"
+    [attr.aria-expanded]="accordionItem.expanded"
+    [attr.aria-controls]="'accordion-body-'"
+  >
+    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+      <h2>
+        {{
+          accordionItem.expanded
+            ? "Esconder filtros de pesquisa ^"
+            : "Mostrar filtros de pesquisa v"
+        }}
+      </h2>
+    </div>
+    <div
+      class="example-accordion-item-body"
+      role="region"
+      [style.display]="accordionItem.expanded ? '' : 'none'"
+      [attr.id]="'accordion-body-'"
+      [attr.aria-labelledby]="'accordion-header-'"
+    >
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="numeroCliente">Nº Cliente</mat-label>
+          <input matInput formControlName="numeroCliente" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="dataInicial">Data Inicial</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            formControlName="dataInicial"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="dataFinal">Data Final</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker2"
+            formControlName="dataFinal"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="nProposta">Nº Proposta</mat-label>
+          <input matInput formControlName="nProposta" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="Categoria">Categoria</mat-label>
+          <mat-select formControlName="categoria">
+            <mat-option value="option1">Todos</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="gestorRemetente">gestorRemetente</mat-label>
+          <input matInput formControlName="gestorRemetente" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" floatLabel="auto" color="accent">
+          <mat-label for="gestorDestinatario">gestorDestinatario</mat-label>
+          <input matInput formControlName="gestorDestinatario" />
+        </mat-form-field>
+
+        <mat-radio-group
+          appearance="outline"
+          color="accent"
+          floatLabel="auto"
+          formControlName="simOuNao"
+        >
+          <mat-label for="simOuNao">Email Tratado</mat-label>
+          <section class="radios">
+            <mat-radio-button value="option1">Sim</mat-radio-button>
+            <mat-radio-button value="option2">Não</mat-radio-button>
+          </section>
+        </mat-radio-group>
+        <section class="button-row">
+          <button
+            mat-stroked-button
+            color="warn"
+            type="button"
+            (click)="clearFilteredData()"
+          >
+            Cancelar
+          </button>
+          <button
+            mat-flat-button
+            color="warn"
+            type="submit"
+            (click)="accordionItem.toggle()"
+          >
+            Pesquisar
+          </button>
+        </section>
+      </form>
+    </div>
+  </cdk-accordion-item>
+</cdk-accordion>
+
+<div *ngIf="filteredData.length > 0; else noData">
+  <mat-table [dataSource]="filteredData">
+    <ng-container matColumnDef="dataEmail">
+      <mat-header-cell *matHeaderCellDef> Data do Email </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.dataEmail }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="categoria">
+      <mat-header-cell *matHeaderCellDef> Categoria </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.categoria }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="nProposta">
+      <mat-header-cell *matHeaderCellDef> Nº Proposta </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.nProposta }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="gestorRemetente">
+      <mat-header-cell *matHeaderCellDef> Gestor Remetente </mat-header-cell>
+      <mat-cell *matCellDef="let data"> {{ data.gestorRemetente }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="gestorDestinatario">
+      <mat-header-cell *matHeaderCellDef>Destinatario </mat-header-cell>
+      <mat-cell *matCellDef="let data">
+        {{ data.gestorDestinatario }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    [pageIndex]="currentPage - 1"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page"
+  ></mat-paginator>
+</div>
+
+<ng-template #noData>
+  <section class="NoData">
+    <img [src]="imageUrl" alt="Search Image" />
+    <h2>Sem resultados</h2>
+    <h3>Filtre a sua pesquisa para obter resultados</h3>
+  </section>
+</ng-template>
